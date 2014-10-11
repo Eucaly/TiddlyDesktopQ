@@ -49,7 +49,7 @@ var openedWindows = [];
 
 // Get the main window
 var mainWindow = gui.Window.get();
-mainWindow.showDevTools();		// unmark list line, to bring up dev tool at startup
+// mainWindow.showDevTools();		// unmark list line, to bring up dev tool at startup
 // alert();						// unmark list line, to pause startup to allow dev tool to be ready
 
 var shuttingDown = false;		// Hacky flag for when we're shutting down
@@ -185,7 +185,7 @@ function updateNodeWiki(data) {
 	// decode --server command parameter
 	var p1 = data.argv.indexOf("--server");
 	var isNew = true;
-	if (p1)
+	if (p1>=0)
 	{
 		var params = data.argv.slice(p1+1);
 		var port = params[0] || "8080",
@@ -225,7 +225,7 @@ function updateNodeWiki(data) {
 
 function stopNodeWiki(data) {
 	var p1 = data.argv.indexOf("--server");
-	if (p1)
+	if (p1>=0)
 	{
 		var params = data.argv.slice(p1+1);
 		var port = params[0] || "8080",
