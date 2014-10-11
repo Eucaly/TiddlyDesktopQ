@@ -1,0 +1,18 @@
+title: main
+
+<div id="td-instructions">
+<$transclude tiddler="top-bar" mode="block"/>
+</div>
+<div id="wikiList">
+<$transclude tiddler="wikiList" mode="block"/>
+</div>
+<div>
+<$list filter="[tag[info]]">
+{{!!title}} : {{!!text}}<br/>
+</$list>
+</div>
+<p>
+	<$button tooltip="might need restart" message="dm-clear-wikilist">
+	<$text text="clear WikiList"/>
+	</$button>
+</p>

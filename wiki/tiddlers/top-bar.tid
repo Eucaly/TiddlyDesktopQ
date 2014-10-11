@@ -1,0 +1,24 @@
+title: top-bar
+
+<table><tr><td>
+	<$image source="Motovun Jack.svg" class="td-logo"/>
+</td><td>	
+	<p><div class="td-file-input-wrapper">
+		<$button tooltip="open in TiddlyDeskTop">
+		<$text text="Browse for a TiddlyWiki file"/>
+		</$button>
+		<$browsewiki/> 
+	</div></p>
+</td></tr></table>	
+	<div class="top-right-bar">
+	<p>Wiki : <$select tiddler="wikifilter">
+		<option value="">== all ==</option>
+		<option value="regexp:url[file:]">files</option>
+		<option value="field:platform[node]">node.js</option>
+	</$select></p>
+	<p>Browser : <$select tiddler="browser">
+		<$list filter="[list[browser]]">
+		<option value=<<currentTiddler>>><$view field='title'/></option>
+		</$list>
+	</$select></p>
+	</div>
