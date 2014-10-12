@@ -60,3 +60,6 @@ You will need below to run [TiddlyDesktopQ](#TiddlyDesktopQ)
     *   bootprefix.js
     *   boot.js
   *   core
+
+### Screenshot
+![screenshot-win32](https://github.com/Eucaly/TiddlyDesktopQ/blob/master/screenshot/2014-10-11%2022.39-win32.png)
