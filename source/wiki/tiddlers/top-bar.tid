@@ -1,15 +1,21 @@
 title: top-bar
 
-<table><tr><td>
+<div id="td-instructions">
+
 	<$image source="Motovun Jack.svg" class="td-logo"/>
-</td><td>	
-	<p><div class="td-file-input-wrapper">
-		<$button tooltip="open in TiddlyDeskTop">
-		<$text text="Browse for a TiddlyWiki file"/>
-		</$button>
-		<$browsewiki/> 
-	</div></p>
-</td></tr></table>	
+
+	<div class="td-file-input-wrapper">
+
+	<$button tooltip="open in TiddlyDeskTop">
+
+	<$text text="Browse for a TiddlyWiki file"/>
+
+	</$button>
+
+	<$browsewiki/> 
+
+	</div>
+
 	<div class="top-right-bar">
 	<p>Wiki : <$select tiddler="wikifilter">
 		<option value="">== all ==</option>
@@ -22,3 +28,5 @@ title: top-bar
 		</$list>
 	</$select></p>
 	</div>
+	
+</div>

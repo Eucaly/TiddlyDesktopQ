@@ -25,15 +25,13 @@ var osShellConfig = {win32: "start ", default: ""};
 // * open console window (bring console window to focus)
 // 		need executable file as : bin/<platform>/focuspid
 
-// ==== Information about each wiki we're tracking. Each entry is a hashmap with these fields:
-// url: full file:// URI of the wiki
-// title: last recorded title string for the wiki	=> changed to wikiTitle
+// Information about each wiki we're tracking. Each entry is a hashmap with these fields:
+// url: full file:// URI of the wiki				=> as "url" and "title" in tiddler
+// title: last recorded title string for the wiki	=> as "wikiTitle" in tiddler
 // img: URI of thumbnail (usually a data URI)
 // isOpen: true if these wiki is currently open
-
+// 
 // ==== added for TiddlyDesktopQ
-// title:	tiddler title, same as url
-// wikiTitle:	last recorded title string for the wiki
 // corePath:	the full path of tiddlywiki.js
 // cwd:		working directory for node.js
 // wikiPath:	TiddlyWikiFolder, which contains tiddlywiki.info file 
@@ -52,7 +50,8 @@ var mainWindow = gui.Window.get();
 // mainWindow.showDevTools();		// unmark list line, to bring up dev tool at startup
 // alert();						// unmark list line, to pause startup to allow dev tool to be ready
 
-var shuttingDown = false;		// Hacky flag for when we're shutting down
+// Hacky flag for when we're shutting down
+var shuttingDown = false;
 
 // Get the current wikiList
 loadWikiList();
@@ -128,7 +127,7 @@ mainWindow.on("loaded",function() {
 	}
 });
 
-// ==== nodeStatus Hook portion ====
+// ==== nodeStatus and tiddler section ====
 var hooktimer = {}, hook = {};
 	hook.data = {};
 	hook.userHome = process.env.USERPROFILE || process.env.HOME || process.env.HOMEPATH;
@@ -309,17 +308,18 @@ function removeWikiInfoTW(title) {
 function updateWikiInfoTW(wikiInfo) {
 	if (!wikiInfo.url)
 		return;
-	$tw.wiki.addTiddler(new $tw.Tiddler({title: wikiInfo.url, tags: "wikilist"}, wikiInfo, {img: null}));
+	$tw.wiki.addTiddler(new $tw.Tiddler(wikiInfo, 
+		{title: wikiInfo.url, tags: "wikilist", wikiTitle: wikiInfo.title, 
+		isOpen: (wikiInfo.isOpen ? "true" : null), img: null}));
 	if (wikiInfo.img)
-		$tw.wiki.addTiddler(new $tw.Tiddler({title: "img of " + wikiInfo.url, tags: "[[" + wikiInfo.url + "]]", type: "image/png", _canonical_uri: wikiInfo.img}));
+		$tw.wiki.addTiddler(new $tw.Tiddler({title: "img of " + wikiInfo.url, 
+			tags: "[[" + wikiInfo.url + "]]", type: "image/png", _canonical_uri: wikiInfo.img}));
 	return;
 }
 
 // Helper to trap UI actions
 function trapUI(dom) {
-// todo: focus the window
 	dom.addEventListener("dm-open-wiki",function(event) {
-//alert(JSON.stringify(event));
 		openWikiIfNotOpen(event.param);
 		return false;
 	},false);
@@ -353,6 +353,9 @@ function trapUI(dom) {
 		return false;
 	},false);	
 	dom.addEventListener("dm-clear-wikilist",function(event) {
+		wikiList.forEach(function(wikiInfo,index) {
+			removeWikiInfoTW(wikiInfo.url);
+		});
 		wikiList=[];
 		saveWikiList();	
 		loadWikiList();
@@ -369,12 +372,13 @@ function trapUI(dom) {
 			}
 			saveWikiList();
 			removeWikiInfoTW(event.param);
-		}
+		} else
+			alert("wiki still open !!");
 		return false;
 	},false);
 }
 
- //	==== end of nodeStatus Hook portion ====
+// ==== end of nodeStatus and tiddler section ====
 
 function convertPathToFileUrl(path) {
 	// File prefix depends on platform
@@ -387,7 +391,6 @@ function convertPathToFileUrl(path) {
 
 function openWikiIfNotOpen(wikiUrl) {
 	var wikiInfo = findwikiInfo(wikiUrl);
-
 	if(!wikiInfo || !wikiInfo.isOpen) {
 		console.log("Now opening wiki");
 		openWiki(wikiUrl);
@@ -407,11 +410,11 @@ function openWiki(wikiUrl) {
 	}
 	// Save the wiki list and update it in the DOM
 	wikiInfo.isOpen = true;
-	wikiInfo.upTime = $tw.utils.formatDateString(new Date(),"YYYY 0MM 0DD 0hh:0mm");
+	if ((!wikiInfo.initTime)||(!wikiInfo.upTime))
+		wikiInfo.upTime = $tw.utils.formatDateString(new Date(),"YYYY 0MM 0DD 0hh:0mm");
 	saveWikiList();
 //	renderWikiList();
 	updateWikiInfoTW(wikiInfo);
-
 	// Open the window
 	var newWindow = gui.Window.open("./host.html",{
 		toolbar: false,
@@ -444,9 +447,9 @@ function openWiki(wikiUrl) {
 				setTimeout(function() {
 					newWindow.capturePage(function(imgDataUri) {
 						wikiInfo.img = imgDataUri;
-						var wikiTitle = hostIframe.contentWindow.document.title;
-						newWindow.window.document.title = wikiTitle;
-						wikiInfo.wikiTitle = wikiTitle;
+						var title = hostIframe.contentWindow.document.title;
+						newWindow.window.document.title = title;
+						wikiInfo.title = title;
 						saveWikiList();
 //						renderWikiList();
 						updateWikiInfoTW(wikiInfo);

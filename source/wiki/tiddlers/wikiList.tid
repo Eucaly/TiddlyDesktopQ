@@ -4,27 +4,51 @@ title: wikiList
 \define copy-path(path) <$button message="dm-copy-path" param=$path$ tooltip="copy path"> ## </$button>
 
 \define wiki-list()
-<table class="td-info-table">
-<$list filter="[tag[wikilist]$(wikifilter)$!sort[upTime]]" emptyMessage="Loading ...">
-	<$list filter="[<currentTiddler>field:platform[node]limit[1]] [[td-platform-node]] [[td-platform-file]] +[nth[2]]" variable="platform-class">
-		<$list filter="[<currentTiddler>has[initTime]limit[1]] [[td-node-up]] [[td-node-stop]] +[nth[2]]" variable="node-up-class">
-			<<wiki-list-tr>>
-</$list></$list></$list>
-</table>
-\end
 
-\define wiki-list-tr()
-<tr class="$(platform-class)$ $(node-up-class)$"><td align="center">
-	<$button message="dm-open-wiki" param=<<currentTiddler>> class="td-open td-btn-invisible">
+<table class="td-info-table">
+
+<$list filter="[tag[wikilist]$(wikifilter)$]" emptyMessage="Loading ...">
+
+	<$list filter="[<currentTiddler>has[isOpen]] [[td-isopen]] [[ ]] +[nth[2]]" variable="isopen-class">
+
+	<$list filter="[<currentTiddler>field:platform[node]limit[1]] [[td-platform-node]] [[td-platform-file]] +[nth[2]]" variable="platform-class">
+
+		<$list filter="[<currentTiddler>has[initTime]limit[1]] [[td-node-up]] [[td-node-stop]] +[nth[2]]" variable="node-up-class">
+
+			<<wiki-list-row>>
+
+</$list>
+
+</$list>
+
+</$list>
+
+</$list>
+
+</table>
+
+\end
+\define wiki-list-row()
+
+<tr class="$(platform-class)$ $(node-up-class)$ $(isopen-class)$">
+
+<td align="center">
+
+	<$button message="dm-open-wiki" param=<<currentTiddler>> class="td-btn-invisible">
 	<$list filter="[<currentTiddler>tagging[]field:type[image/png]]" emptyMessage="no image">
-		<$image source=<<currentTiddler>> width="120"/>
+	<$image source=<<currentTiddler>> width="120"/>
 	</$list>
 	</$button>
-</td><td class="td-info"><div class="td-info">
-	<$button message="dm-open-wiki" param=<<currentTiddler>> class="td-btn-invisible">
-		<div class="td-title"><$view field="wikiTitle"><$text text={{!!title}}/></$view></div>
-		<div class="openwiki td-url">url : <$text text={{!!url}}/></div>
-	</$button>
+
+</td>
+
+<td>
+
+<div class="td-info">
+
+	<div class="td-title"><$view field="wikiTitle"><$view field="title"/></$view></div>
+	<div class="td-url"><$view field="url"/></div>
+
 	<div class="td-url"> 
 		<$list filter="[<currentTiddler>has[corePath]]">
 		 corePath : <$view field="corePath"/>
@@ -50,43 +74,29 @@ title: wikiList
 		</$list> : <$view field="upTime"/>
 		</$list>
 	</div>
-	<div class="td-toolbar"> 
-		<$list filter="[<currentTiddler>!field:platform[node]] [<currentTiddler>has[initTime]] +[limit[1]]">
-			<$button message="dm-open-wiki" param=<<currentTiddler>> class="td-open">open</$button>
-			<$button message="dm-open-browser" param=<<currentTiddler>> class="td-open">open Browser</$button>
+
+	<div class="td-toolbar"><$list filter="[<currentTiddler>!field:platform[node]] [<currentTiddler>has[initTime]] +[limit[1]]"><$list filter="[<currentTiddler>!has[isOpen]]" emptyMessage='<$button message="dm-open-wiki" param=<<currentTiddler>> class="td-open">activate</$button>'><$button message="dm-open-wiki" param=<<currentTiddler>> class="td-open">open</$button><$button message="dm-remove-wiki" param=<<currentTiddler>> class="td-remove">remove</$button></$list><$button message="dm-open-browser" param=<<currentTiddler>> class="td-open">open Browser</$button>
 			<$list filter="[<currentTiddler>field:platform[node]] +[limit[1]]">
 					<$button message="dm-open-console" param=<<currentTiddler>> class="td-open">open console</$button>
 			</$list>
 		</$list>
 		<$list filter="[<currentTiddler>field:platform[node]!has[initTime]] +[limit[1]]">
 				<$button message="dm-start-server" param=<<currentTiddler>> class="td-open">start server</$button>
-		</$list>
-		<$button message="dm-remove-wiki" param=<<currentTiddler>> class="td-remove">remove</$button>
-	</div>
-</div></td></tr>
+		</$list></div>
+
+</div>
+
+</td>
+
+</tr>
+
 \end
+<div id="wikiList">
 
 <$set name="wikifilter" value={{wikifilter}}>
+
 <<wiki-list>>
+
 </$set>
 
-<!-- todo 
-* remove renderWikiList() => 2.3K
-[80%] top-right-bar
-[80%] clear localStore	=> need restart
-[ ] scroll to top for new entry
-[?] by template ...
-[win32] different browser
-[ ] buttons
-	[v] open in TiddlyDesktop
-	[v]	remove
-	[v] open Browser
-	[v] copy path
-	[v] open path
-	[win32] start node.js server
-	[ ] stop node.js server
-	[ ] restart node.js server
-	[win32] open console => call focuspid	
-[90%] CSS
-[v] a href="javascript:void(0)"
--->
+</div>
