@@ -1,65 +1,7 @@
 TiddlyDesktopQ
 ==============
 
-an unofficial variant or the original TiddlyDesktop
-
-### Introduction
-
-[TiddlyDesktop](https://github.com/Jermolene/TiddlyDesktop) is a custom browser for TiddlyWiki, based on node-webkit
-
-*   [https://github.com/Jermolene/TiddlyDesktop](https://github.com/Jermolene/TiddlyDesktop)
-
-**TiddlyDesktopQ** is an unofficial variant (porting from the original version) with below differences:
-
-1.  User interface achieved by tiddlers of TiddlyWiki
-2.  Central control of Node.js TiddlyWiki server instances
-3.  More features
-
-### Feature
-
-**TiddlyDesktopQ** has below features
-
-*   choose to open different browser
-*   central control of Node.js TiddlyWiki server instances
-*   auto popup main window when new console detected
-*   open Node.js console
-*   start Node.js server
-*   copy path / open path in file explorer
-
-### Usage
-
-You will need below to run [TiddlyDesktopQ](#TiddlyDesktopQ)
-
-1.  [TiddlyDesktopQ](#TiddlyDesktopQ) source code
-  *   [https://github.com/Eucaly/TiddlyDesktopQ](https://github.com/Eucaly/TiddlyDesktopQ)
-2.  **TiddlyWiki5** source code in parallel to it (see folder structure as below).
-  *   [https://github.com/Jermolene/TiddlyWiki5](https://github.com/Jermolene/TiddlyWiki5)
-3.  Install **nodeStatus** module to your Node.js [TiddlyWiki](#TiddlyWiki) instances
-  *   available in ../[TiddlyDesktopQ](#TiddlyDesktopQ)/tw5-module
-4.  Config external browser list and some OS shell dependent settings
-5.  **node-webkit** binary
-  *   [https://github.com/rogerwang/node-webkit](https://github.com/rogerwang/node-webkit)
-  *   the executable binary can resident in the same folder as [TiddlyDesktopQ](#TiddlyDesktopQ), or
-  *   running from somewhere else with parameter pointing to [TiddlyDesktopQ](#TiddlyDesktopQ) folder, such as
-    
-    `nw <absolute or relative path to TiddlyDesktopQ>`
-    
-*   tested under
-  *   `node-webkit v0.8.4` - win32
-  *   `node-webkit v0.10.5` - win32
-
-### Folder structure
-* **TiddlyDesktopQ**
-  *   html
-    *   main.html
-    *   host.html
-  *   js
-    *   main.js
-* **TiddlyWiki5**
-  * boot
-    *   bootprefix.js
-    *   boot.js
-  *   core
+<h3 class=''>Introduction</h3><p><a class='tc-tiddlylink-external' href='https://github.com/Jermolene/TiddlyDesktop' target='_blank'>TiddlyDesktop</a> is a custom browser for TiddlyWiki, based on node-webkit</p><ul><li><a class='tc-tiddlylink-external' href='https://github.com/Jermolene/TiddlyDesktop' target='_blank'>https://github.com/Jermolene/TiddlyDesktop</a></li></ul><p>Here is an experimental fork with below differences:</p><ol><li>User interface achieved by tiddlers of TiddlyWiki</li><li>Central control of Node.js TiddlyWiki server instances</li><li>More features</li></ol><h3 class=''>Feature</h3><ul><li>choose to open different browser</li><li>central control of Node.js TiddlyWiki server instances </li><li>auto popup main window when new console detected</li><li>open Node.js console</li><li>start Node.js server</li><li>copy path / open path in file explorer</li></ul><h3 class=''>Usage</h3><p>You will need below to run this experimental fork</p><ol><li>Source code<ul><li><a class='tc-tiddlylink-external' href='https://github.com/Eucaly/TiddlyDesktopQ' target='_blank'>https://github.com/Eucaly/TiddlyDesktopQ</a></li></ul></li><li><strong>TiddlyWiki5</strong> source code in parallel to it (see folder structure as below).<ul><li><a class='tc-tiddlylink-external' href='https://github.com/Jermolene/TiddlyWiki5' target='_blank'>https://github.com/Jermolene/TiddlyWiki5</a></li></ul></li><li>Install <strong>nodeStatus</strong> module to your Node.js TiddlyWiki instances<ul><li>available in ../tw5-module</li></ul></li><li>Config external browser list and some OS shell dependent settings</li><li><strong>node-webkit</strong> binary<ul><li><a class='tc-tiddlylink-external' href='https://github.com/rogerwang/node-webkit' target='_blank'>https://github.com/rogerwang/node-webkit</a></li><li>the executable binary can resident in the same folder as <code>package.json</code>, or</li><li>running from somewhere else with parameter pointing to <code>package.json</code> folder, such as </li></ul></li></ol><pre><code>nw  &lt;absolute or relative path to the folder&gt;</code></pre><ul><li>tested under<ul><li><code>node-webkit v0.8.4</code> - win32 </li><li><code>node-webkit v0.10.5</code> - win32</li></ul></li></ul><h3 class=''>Folder structure</h3><ul><li><strong>TiddlyDesktopQ</strong><ul><li>html<ul><li>main.html</li><li>host.html</li></ul></li><li>js<ul><li>main.js</li></ul></li></ul></li><li><strong>TiddlyWiki5</strong><ul><li>boot<ul><li>bootprefix.js</li><li>boot.js</li></ul></li><li>core</li></ul></li></ul>
 
 ### Screenshot
 ![screenshot-win32](https://github.com/Eucaly/TiddlyDesktopQ/blob/master/screenshot/2014-10-11%2022.39-win32.png)
